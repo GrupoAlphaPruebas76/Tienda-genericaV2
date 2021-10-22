@@ -68,7 +68,7 @@ public class UsuarioController {
 			return null;
 		}
 	}
-
+	
 	/*
 	 * @DeleteMapping("/eliminar/{id}") public void
 	 * eliminarUsuario(@PathVariable("id") Long id) { usuarioDAO.deleteById(id); }

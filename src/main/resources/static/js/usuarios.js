@@ -5,7 +5,7 @@ $(document).ready(function() {
 		.addEventListener('change', upload, false);
 
 	var tablaUsuarios = $('#tablaUsuarios').DataTable({
-		//"language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+		"language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
 		"columns": [
 			{ "data": "cedulaUsuario" },
 			{ "data": "nombreCUsuario" },

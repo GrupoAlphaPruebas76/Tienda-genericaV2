@@ -1,5 +1,6 @@
 package co.edu.unbosque.tiendagenerica.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.hibernate.exception.ConstraintViolationException;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import co.edu.unbosque.tiendagenerica.dao.ClienteDAO;
 import co.edu.unbosque.tiendagenerica.model.Cliente;
+import co.edu.unbosque.tiendagenerica.model.Proveedor;
 import co.edu.unbosque.tiendagenerica.utils.JWTUtil;
 import io.jsonwebtoken.MalformedJwtException;
 
@@ -33,6 +35,18 @@ public class ClienteController {
 	@GetMapping(value = "/{cedula_cliente}")
 	public Cliente obtenerCliente(@PathVariable Long cedula_cliente) {
 		return clienteDAO.existsById(cedula_cliente) ? clienteDAO.getById(cedula_cliente) : null;
+	}
+
+	@PostMapping("/guardar_lista")
+	public String guardarListado(@RequestBody ArrayList<Cliente> listado) {
+		if (!listado.isEmpty()) {
+			for (Cliente prod : listado) {
+				clienteDAO.save(prod);
+			}
+			return "EXITO";
+		} else {
+			return "VACIO";
+		}
 	}
 
 	@PostMapping("/guardar") // Request convierte en un objeto Java desde un JSon

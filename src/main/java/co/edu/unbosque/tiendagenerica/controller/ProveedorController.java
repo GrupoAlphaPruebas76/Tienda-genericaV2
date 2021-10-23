@@ -1,5 +1,6 @@
 package co.edu.unbosque.tiendagenerica.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,6 +37,18 @@ public class ProveedorController {
 	@GetMapping(value = "/{nit_proveedor}")
 	public Proveedor obtenerProveedor(@PathVariable Long nit_proveedor) {
 		return proveedorDAO.existsById(nit_proveedor) ? proveedorDAO.getById(nit_proveedor) : null;
+	}
+
+	@PostMapping("/guardar_lista")
+	public String guardarListado(@RequestBody ArrayList<Proveedor> listado) {
+		if (!listado.isEmpty()) {
+			for (Proveedor prod : listado) {
+				proveedorDAO.save(prod);
+			}
+			return "EXITO";
+		} else {
+			return "VACIO";
+		}
 	}
 
 	@PostMapping("/guardar") // Request convierte en un objeto Java desde un JSon

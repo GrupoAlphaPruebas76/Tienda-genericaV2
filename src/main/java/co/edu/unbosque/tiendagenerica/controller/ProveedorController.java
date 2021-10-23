@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.unbosque.tiendagenerica.dao.ProveedorDAO;
 import co.edu.unbosque.tiendagenerica.model.Proveedor;
-import co.edu.unbosque.tiendagenerica.utils.JWTUtil;
-import io.jsonwebtoken.MalformedJwtException;
 
 @RestController
 @RequestMapping(value = "api/proveedores")
@@ -30,9 +27,6 @@ public class ProveedorController {
 
 	@Autowired
 	EntityManager entityManager;
-
-	@Autowired
-	private JWTUtil jwtUtil;
 
 	@GetMapping(value = "/{nit_proveedor}")
 	public Proveedor obtenerProveedor(@PathVariable Long nit_proveedor) {
@@ -52,16 +46,10 @@ public class ProveedorController {
 	}
 
 	@PostMapping("/guardar") // Request convierte en un objeto Java desde un JSon
-	public String guardarProveedor(@RequestBody Proveedor proveedor,
-			@RequestHeader(value = "Authorization") String token) {
+	public String guardarProveedor(@RequestBody Proveedor proveedor) {
 		try {
-			String nick = jwtUtil.getValue(token);
-			if (nick.equalsIgnoreCase("admin")) {
-				proveedorDAO.save(proveedor);
-				return "AGREGADO";
-			} else {
-				return "NO_ADMIN";
-			}
+			proveedorDAO.save(proveedor);
+			return "AGREGADO";
 
 		} catch (ConstraintViolationException e) {
 			// System.err.print(e.getMessage());
@@ -87,33 +75,17 @@ public class ProveedorController {
 	 */
 
 	@DeleteMapping("/eliminar/{nit_proveedor}")
-	public String eliminarProveedor(@PathVariable("nit_proveedor") Long nitProveedor,
-			@RequestHeader(value = "Authorization") String token) {
-		try {
-			String nick = jwtUtil.getValue(token);
-			if (nick.equalsIgnoreCase("admin")) {
-				proveedorDAO.deleteById(nitProveedor);
-				return "ELIMINADO";
-			} else {
-				return "NO_ADMIN";
-			}
-		} catch (MalformedJwtException mjwt) {
-			System.err.print(mjwt.getMessage());
-			return "TOKEN_ERROR";
-		}
+	public String eliminarProveedor(@PathVariable("nit_proveedor") Long nitProveedor) {
+		proveedorDAO.deleteById(nitProveedor);
+		return "ELIMINADO";
+
 	}
 
 	@PutMapping("/actualizar")
-	public String actualizarProveedor(@RequestBody Proveedor proveedor,
-			@RequestHeader(value = "Authorization") String token) {
+	public String actualizarProveedor(@RequestBody Proveedor proveedor) {
 		try {
-			String nick = jwtUtil.getValue(token);
-			if (nick.equalsIgnoreCase("admin")) {
-				proveedorDAO.save(proveedor);
-				return "ACTUALIZADO";
-			} else {
-				return "NO_ADMIN";
-			}
+			proveedorDAO.save(proveedor);
+			return "ACTUALIZADO";
 		} catch (ConstraintViolationException e) {
 			// System.err.print(e.getMessage());
 			return e.getMessage();

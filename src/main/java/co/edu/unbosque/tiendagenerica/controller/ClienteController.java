@@ -11,14 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import co.edu.unbosque.tiendagenerica.dao.ClienteDAO;
 import co.edu.unbosque.tiendagenerica.model.Cliente;
-import co.edu.unbosque.tiendagenerica.model.Proveedor;
-import co.edu.unbosque.tiendagenerica.utils.JWTUtil;
-import io.jsonwebtoken.MalformedJwtException;
 
 @RestController
 @RequestMapping(value = "api/clientes")
@@ -28,9 +24,6 @@ public class ClienteController {
 
 	@Autowired
 	EntityManager entityManager;
-
-	@Autowired
-	private JWTUtil jwtUtil;
 
 	@GetMapping(value = "/{cedula_cliente}")
 	public Cliente obtenerCliente(@PathVariable Long cedula_cliente) {
@@ -50,16 +43,10 @@ public class ClienteController {
 	}
 
 	@PostMapping("/guardar") // Request convierte en un objeto Java desde un JSon
-	public String guardarCliente(@RequestBody Cliente cliente, @RequestHeader(value = "Authorization") String token) {
+	public String guardarCliente(@RequestBody Cliente cliente) {
 		try {
-			String nick = jwtUtil.getValue(token);
-			if (nick.equalsIgnoreCase("admin")) {
-				clienteDAO.save(cliente);
-				return "AGREGADO";
-			} else {
-				return "NO_ADMIN";
-			}
-
+			clienteDAO.save(cliente);
+			return "AGREGADO";
 		} catch (ConstraintViolationException e) {
 			// System.err.print(e.getMessage());
 			return e.getMessage();
@@ -84,33 +71,16 @@ public class ClienteController {
 	 */
 
 	@DeleteMapping("/eliminar/{cedula_cliente}")
-	public String eliminarProveedor(@PathVariable("cedula_cliente") Long cedula_cliente,
-			@RequestHeader(value = "Authorization") String token) {
-		try {
-			String nick = jwtUtil.getValue(token);
-			if (nick.equalsIgnoreCase("admin")) {
-				clienteDAO.deleteById(cedula_cliente);
-				return "ELIMINADO";
-			} else {
-				return "NO_ADMIN";
-			}
-		} catch (MalformedJwtException mjwt) {
-			System.err.print(mjwt.getMessage());
-			return "TOKEN_ERROR";
-		}
+	public String eliminarProveedor(@PathVariable("cedula_cliente") Long cedula_cliente) {
+		clienteDAO.deleteById(cedula_cliente);
+		return "ELIMINADO";
 	}
-
+	
 	@PutMapping("/actualizar")
-	public String actualizarProveedor(@RequestBody Cliente cliente,
-			@RequestHeader(value = "Authorization") String token) {
+	public String actualizarProveedor(@RequestBody Cliente cliente) {
 		try {
-			String nick = jwtUtil.getValue(token);
-			if (nick.equalsIgnoreCase("admin")) {
-				clienteDAO.save(cliente);
-				return "ACTUALIZADO";
-			} else {
-				return "NO_ADMIN";
-			}
+			clienteDAO.save(cliente);
+			return "ACTUALIZADO";
 		} catch (ConstraintViolationException e) {
 			// System.err.print(e.getMessage());
 			return e.getMessage();
@@ -118,5 +88,4 @@ public class ClienteController {
 			return "ERROR GENERAL : " + e.getMessage();
 		}
 	}
-
 }

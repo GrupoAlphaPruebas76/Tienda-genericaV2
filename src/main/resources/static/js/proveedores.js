@@ -122,6 +122,7 @@ function upload(evt) {
 		};
 	}
 }
+
 function getHeaders() {
 	return {
 		'Accept': 'application/json',

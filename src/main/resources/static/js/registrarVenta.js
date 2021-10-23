@@ -1,5 +1,35 @@
 $(document).ready(function() {
 	//On ready
+	$.ajax({
+		url: '/api/usuarios/listar',
+		type:"GET",
+		datatype:"json",
+		success: function(data){
+			//console.log(data);
+			/*
+			var fuseOptions = {keys: ["nitProveedor", "ciudadProveedor"]};
+			var opciones = {display: "nitProveedor", key:"ciudadProveedor", fuseOptions: fuseOptions};
+			// boton al cual le asignare el autocompletado
+			$("#txtNitProveedor").fuzzyComplete(data, opciones);
+			*/
+			$("#txtCedulaUsuario").fuzzyComplete(data);
+		}
+	});
+	$.ajax({
+		url: '/api/clientes/listar',
+		type:"GET",
+		datatype:"json",
+		success: function(data){
+			//console.log(data);
+			/*
+			var fuseOptions = {keys: ["nitProveedor", "ciudadProveedor"]};
+			var opciones = {display: "nitProveedor", key:"ciudadProveedor", fuseOptions: fuseOptions};
+			// boton al cual le asignare el autocompletado
+			$("#txtNitProveedor").fuzzyComplete(data, opciones);
+			*/
+			$("#txtCedulaCliente").fuzzyComplete(data);
+		}
+	});
 });
 
 function getHeaders() {
@@ -12,12 +42,11 @@ function getHeaders() {
 
 async function registrarVenta() {
 	let datos = {};
-    datos.codigoVenta = document.getElementById('txtCodigoVentaUpdate').value;
-    datos.cedulaCliente = document.getElementById('txtCedulaClienteUpdate').value;
-    datos.cedulaUsuario = document.getElementById('txtCedulaUsuarioUpdate').value;
-    datos.ivaVenta = document.getElementById('txtIVAVentaUpdate').value;
+    datos.cedulaCliente = document.getElementById('txtCedulaCliente').value;
+    datos.cedulaUsuario = document.getElementById('txtCedulaUsuario').value;
+    datos.ivaVenta = document.getElementById('txtIVAVenta').value;
     datos.valorVenta = document.getElementById('txtValorVenta').value;
-    datos.totalVenta = document.getElementById('txtTotalVentaUpdate').value;
+    datos.totalVenta = document.getElementById('txtTotalVenta').value;
 
 	const request = await fetch('api/ventas/guardar', {
 		method: 'POST',

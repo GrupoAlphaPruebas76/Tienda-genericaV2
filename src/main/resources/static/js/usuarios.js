@@ -100,7 +100,7 @@ function upload(evt) {
 			//data = $.csv.toArrays(csvData);
 			var items = $.csv.toObjects(csvData);
 			var jsonobject = JSON.stringify(items);
-			alert(jsonobject)
+			//alert(jsonobject)
 			$.ajax({
 				url: '/api/usuarios/guardar_lista',
 				type: 'POST',

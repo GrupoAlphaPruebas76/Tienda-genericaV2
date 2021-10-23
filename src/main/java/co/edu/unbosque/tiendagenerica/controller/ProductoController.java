@@ -1,5 +1,6 @@
 package co.edu.unbosque.tiendagenerica.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,18 @@ public class ProductoController {
 
 	@Autowired
 	private ProductoDAO productoDAO;
+
+	@PostMapping("/guardar_lista")
+	public String guardarListado(@RequestBody ArrayList<Producto> listado) {
+		if (!listado.isEmpty()) {
+			for (Producto prod : listado) {
+				productoDAO.save(prod);
+			}
+			return "EXITO";
+		} else {
+			return "VACIO";
+		}
+	}
 
 	@PostMapping(value = "/guardar")
 	public String agregarProducto(@RequestBody Producto producto) {

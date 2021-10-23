@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+	// The event listener for the file upload
+	document.getElementById('txtFileUpload')
+		.addEventListener('change', upload, false);
+
 	var tablaProveedores = $('#tablaProveedores').DataTable({
 		"language": { "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
 		"columns": [
@@ -76,7 +80,48 @@ $(document).ready(function() {
 		eliminarProveedor(nit);
 	});
 });
+// Method that checks that the browser supports the HTML5 File API
+function browserSupportFileUpload() {
+	var isCompatible = false;
+	if (window.File && window.FileReader
+		&& window.FileList && window.Blob) {
+		isCompatible = true;
+	}
+	return isCompatible;
+}
 
+// Method that reads and processes the selected file
+function upload(evt) {
+	if (!browserSupportFileUpload()) {
+		alert('The File APIs are not fully supported in this browser!');
+	} else {
+		var data = null;
+		var file = evt.target.files[0];
+		var reader = new FileReader();
+		reader.readAsText(file);
+		reader.onload = function(event) {
+			var csvData = event.target.result;
+			//convert to JS array
+			//data = $.csv.toArrays(csvData);
+			var items = $.csv.toObjects(csvData);
+			var jsonobject = JSON.stringify(items);
+			alert(jsonobject)
+			$.ajax({
+				url: '/api/proveedores/guardar_lista',
+				type: 'POST',
+				data: jsonobject,
+				contentType: 'application/json',
+				success: function(response) {
+					alert(response)
+				}
+			});
+			location.reload();
+		};
+		reader.onerror = function() {
+			alert('Unable to read ' + file.fileName);
+		};
+	}
+}
 function getHeaders() {
 	return {
 		'Accept': 'application/json',

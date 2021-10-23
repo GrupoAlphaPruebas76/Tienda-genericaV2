@@ -1,5 +1,25 @@
 $(document).ready(function() {
 	//On ready
+
+	/**
+	 * Lista desplegable para autocompletar un campo
+	 */
+	var url = '/api/proveedores/listar';
+	$.ajax({
+		url: url,
+		type:"GET",
+		datatype:"json",
+		success: function(data){
+			//console.log(data);
+			/*
+			var fuseOptions = {keys: ["nitProveedor", "ciudadProveedor"]};
+			var opciones = {display: "nitProveedor", key:"ciudadProveedor", fuseOptions: fuseOptions};
+			// boton al cual le asignare el autocompletado
+			$("#txtNitProveedor").fuzzyComplete(data, opciones);
+			*/
+			$("#txtNitProveedor").fuzzyComplete(data);
+		}
+	});
 });
 
 function getHeaders() {

@@ -19,6 +19,7 @@ $(document).ready(function() {
 		],
 	})
 
+
 	GetProductosList();
 
 	// Obtener lista de clientes

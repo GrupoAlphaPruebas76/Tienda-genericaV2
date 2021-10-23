@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -25,12 +28,20 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
 public class Producto {
+	/*
+	// Metodo añadido para leer parametros en archivo CSV...
+	public Producto(long parseLong, double parseDouble, long parseLong2, String string, double parseDouble2,
+			double parseDouble3) {
+		// TODO Auto-generated constructor stub
+	} */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codigo_producto", unique = true)
+	@ColumnDefault("'N/A'")
 	private long codigoProducto;
 
 	@Column(name = "ivacompra")

@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.Http2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,7 +70,7 @@ public class UsuarioController {
 			return null;
 		}
 	}
-
+	
 	/*
 	 * @DeleteMapping("/eliminar/{id}") public void
 	 * eliminarUsuario(@PathVariable("id") Long id) { usuarioDAO.deleteById(id); }

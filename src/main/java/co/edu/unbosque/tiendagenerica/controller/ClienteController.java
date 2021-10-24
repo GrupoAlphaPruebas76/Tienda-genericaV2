@@ -71,13 +71,13 @@ public class ClienteController {
 	 */
 
 	@DeleteMapping("/eliminar/{cedula_cliente}")
-	public String eliminarProveedor(@PathVariable("cedula_cliente") Long cedula_cliente) {
+	public String eliminarCliente(@PathVariable("cedula_cliente") Long cedula_cliente) {
 		clienteDAO.deleteById(cedula_cliente);
 		return "ELIMINADO";
 	}
 	
 	@PutMapping("/actualizar")
-	public String actualizarProveedor(@RequestBody Cliente cliente) {
+	public String actualizarCliente(@RequestBody Cliente cliente) {
 		try {
 			clienteDAO.save(cliente);
 			return "ACTUALIZADO";

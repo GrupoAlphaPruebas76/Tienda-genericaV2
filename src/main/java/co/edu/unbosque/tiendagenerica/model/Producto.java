@@ -31,12 +31,6 @@ import lombok.ToString;
 @DynamicInsert
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer" })
 public class Producto {
-	/*
-	// Metodo añadido para leer parametros en archivo CSV...
-	public Producto(long parseLong, double parseDouble, long parseLong2, String string, double parseDouble2,
-			double parseDouble3) {
-		// TODO Auto-generated constructor stub
-	} */
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

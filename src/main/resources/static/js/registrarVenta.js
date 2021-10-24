@@ -5,13 +5,6 @@ $(document).ready(function() {
 		type:"GET",
 		datatype:"json",
 		success: function(data){
-			//console.log(data);
-			/*
-			var fuseOptions = {keys: ["nitProveedor", "ciudadProveedor"]};
-			var opciones = {display: "nitProveedor", key:"ciudadProveedor", fuseOptions: fuseOptions};
-			// boton al cual le asignare el autocompletado
-			$("#txtNitProveedor").fuzzyComplete(data, opciones);
-			*/
 			$("#txtCedulaUsuario").fuzzyComplete(data);
 		}
 	});
@@ -20,13 +13,6 @@ $(document).ready(function() {
 		type:"GET",
 		datatype:"json",
 		success: function(data){
-			//console.log(data);
-			/*
-			var fuseOptions = {keys: ["nitProveedor", "ciudadProveedor"]};
-			var opciones = {display: "nitProveedor", key:"ciudadProveedor", fuseOptions: fuseOptions};
-			// boton al cual le asignare el autocompletado
-			$("#txtNitProveedor").fuzzyComplete(data, opciones);
-			*/
 			$("#txtCedulaCliente").fuzzyComplete(data);
 		}
 	});

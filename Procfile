@@ -1,1 +1,2 @@
 web: java -jar target/tiendagenerica-0.0.1-SNAPSHOT.jar
+-Dserver.port=$PORT

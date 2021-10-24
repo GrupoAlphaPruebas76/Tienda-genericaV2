@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @SpringBootApplication
 public class TiendagenericaApplication {
 
-	@RequestMapping("/")
+	/*@RequestMapping("/")
     //@ResponseBody
     String home() {
       return "index.html";
-    }
+    }*/
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TiendagenericaApplication.class, args);

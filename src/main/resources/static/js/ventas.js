@@ -10,7 +10,7 @@ $(document).ready(function () {
             { "data": "valorVenta" },
             { "data": "totalVenta" },
             {
-                defaultContent: '<button class="btnEditar btn btn-success" data-toggle="modal" data-target="#update_user_modal">Editar</button>&nbsp;&nbsp;<button class="btnBorrar btn btn-danger" type="button">Borrar</button>'
+                defaultContent: '<button class="btnBorrar btn btn-danger" type="button">Borrar</button>'
             }
         ],
     })
